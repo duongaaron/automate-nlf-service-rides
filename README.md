@@ -19,7 +19,7 @@ This system supports **two methods** for obtaining geographic coordinates for ad
 - Uses the **Google Maps Geocoding API** via `geopy.geocoders.GoogleV3`
 - Requires:
   - A valid **Google Maps API key**
-  - Shared access with the **Google Cloud service account email** (nlf-automate-rides-service-acc@nlf-automate-rides.iam.gserviceaccount.com)
+  - Shared access with the **Google Cloud service account email** (nlf-automate-rides-service-acc@nlf-automate-rides.iam.gserviceaccount.com) to read directly from the Google Sheets link
 - Best for automatic, precise address lookup
 - May incur usage costs after the generous quote (1000 requests per day) (I don't think I will ever go over this)
 
