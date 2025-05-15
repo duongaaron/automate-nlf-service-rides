@@ -2,6 +2,8 @@
 
 This project automates the assignment and visualization of church service rides for the NLF community. It assigns riders to drivers for both **to service** and **back from service** directions, generates Excel summaries, and produces interactive maps using Folium for visual inspection.
 
+The nature of the algorithm assigns drivers to riders that are "on the way" to church (going to church) and "on the way" to the driver's home (on the way back). In other words, the algorithm assigns riders to drivers that are nearest to the driver, minimizing the overall detour time that drivers have to make when picking up their passengers.
+
 ## 📦 Features
 
 - Assign riders to drivers based on pickup location, service time preferences, and other constraints
