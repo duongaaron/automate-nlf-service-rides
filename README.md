@@ -66,13 +66,3 @@ This site is hosted via **GitHub Pages**.
 2. Code with automatically generate `index.html`, `assignments_*.xlsx`, and `maps/` folders into the GitHub repo.
 3. Commit and push.
 4. GitHub Pages will auto-update the site.
-
-## 📲 Mobile Compatibility
-
-- Buttons are styled for touch devices.
-- Tables and maps are placed in responsive wrappers (`overflow-x: auto`) for better scrolling on mobile.
-- Folium maps support touch zoom/panning but can be finicky; zoom buttons are also available.
-
-## 📥 Download Link
-
-The Excel file with all assignments can be downloaded directly from the homepage using the green **Download Assignments** button.
