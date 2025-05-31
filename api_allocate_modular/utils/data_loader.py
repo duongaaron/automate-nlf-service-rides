@@ -10,7 +10,8 @@ from utils.constants import (
     NAME_COLUMN, PICKUP_COLUMN, SERVICE_TYPE_COLUMN, AFTER_SERVICE_PLANS_COLUMN,
     IS_DRIVER_COLUMN, OC_ADDRESS, location_to_address,
     PASSENGER_LIMIT, rider_groups_to, rider_groups_back,
-    driver_required_riders_to, driver_required_riders_back
+    driver_required_riders_to, driver_required_riders_back,
+    CHURCH_LOCATION
 )
 from utils.geo_utils import geocode_address, address_coords, oc_people_w_invalid_address
 from utils.assignment_logic import (
@@ -123,14 +124,14 @@ class DataLoader:
         assignments_to, remaining_drivers_to, remaining_riders_to = assign_whitelisted_groups(
             drivers, riders, driver_required_riders_to, rider_groups_to)
         assignments_to, unassigned_riders_to = assign_riders_by_furthest_first(
-            remaining_drivers_to, remaining_riders_to, (29.892500, -95.525675), assignments=assignments_to)
+            remaining_drivers_to, remaining_riders_to, CHURCH_LOCATION, assignments=assignments_to)
 
         # FROM church
         assignments_back, remaining_drivers_back, remaining_riders_back = assign_whitelisted_groups(
             drivers_back, riders_back, driver_required_riders_back, rider_groups_back
         )
         assignments_back, unassigned_riders_back = assign_from_church(
-            remaining_drivers_back, remaining_riders_back,(29.892500, -95.525675), assignments=assignments_back
+            remaining_drivers_back, remaining_riders_back,CHURCH_LOCATION, assignments=assignments_back
         )
         return {
             "assignments_to": dict(assignments_to),

@@ -69,3 +69,5 @@ location_colors = {
     "Refreshments": "FFB6D7A8",
     "NLK 🧡": "FFFFCCA4",
 }
+
+CHURCH_LOCATION = (29.892500, -95.525675)

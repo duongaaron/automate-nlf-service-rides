@@ -6,7 +6,9 @@ import math
 from folium import PolyLine
 from folium.plugins import PolyLineTextPath
 
-CHURCH_LOCATION = (29.7107, -95.3994)  # fallback if none provided
+from utils.constants import (
+    CHURCH_LOCATION
+)
 
 class MapPlotter:
     def __init__(self):
