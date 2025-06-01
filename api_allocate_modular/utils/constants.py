@@ -1,28 +1,28 @@
 # Google Sheets Information
-GOOGLE_SHEETS_LINK = "https://docs.google.com/spreadsheets/d/1HoSoVgSTPdy2VV7zRvZMhtQX77LgRZ13DXvOQSluSNQ/edit?gid=1076432338#gid=1076432338"
-GOOGLE_SHEETS_TAB = "Google Form RESET"
+GOOGLE_SHEETS_LINK = "https://docs.google.com/spreadsheets/d/1DZfC2GULOud8kl8gsGD7D1wmdG9YNhqNPL6L0PMabh8/edit?resourcekey=&gid=1441308570#gid=1441308570"
+GOOGLE_SHEETS_TAB = "Form Responses 3"
 
 # Column Titles
-# NAME_COLUMN = "Name (first + last name)"
-# PICKUP_COLUMN = "Where would you like to be picked up? Please include your address (drivers too!)."
-# SERVICE_TYPE_COLUMN = "Which Sunday service are you attending?"
-# AFTER_SERVICE_PLANS_COLUMN = "Preferred After Church Plans?"
-# IS_DRIVER_COLUMN = "Are you a driver?"
-# OC_ADDRESS = PICKUP_COLUMN
-# SUMMER_HC_OR_SERVICE = "Please select which of the following you will need a ride to!"
-
-NAME_COLUMN = "Name"
-PICKUP_COLUMN = "Where would you like to be picked up?"
-SERVICE_TYPE_COLUMN = "Are you coming to summer house church on Saturday (May 31st)?"
-AFTER_SERVICE_PLANS_COLUMN = "Preferred after church plans?"
+NAME_COLUMN = "Name (first + last name)"
+PICKUP_COLUMN = "Where would you like to be picked up? Please include your address (drivers too!)."
+SERVICE_TYPE_COLUMN = "Which Sunday service are you attending?"
+AFTER_SERVICE_PLANS_COLUMN = "Preferred After Church Plans?"
 IS_DRIVER_COLUMN = "Are you a driver?"
-OC_ADDRESS = "Off Campus address"
 SUMMER_HC_OR_SERVICE = "Please select which of the following you will need a ride to!"
+OC_ADDRESS = PICKUP_COLUMN
+
+# NAME_COLUMN = "Name"
+# PICKUP_COLUMN = "Where would you like to be picked up?"
+# SERVICE_TYPE_COLUMN = "Are you coming to summer house church on Saturday (May 31st)?"
+# AFTER_SERVICE_PLANS_COLUMN = "Preferred after church plans?"
+# IS_DRIVER_COLUMN = "Are you a driver?"
+# OC_ADDRESS = "Off Campus address"
+# SUMMER_HC_OR_SERVICE = "Please select which of the following you will need a ride to!"
 
 # Stop Names
 NORTH_STOP_NAME = "North (Brown, Duncan, Jones, Martel, McMurtry)"
 SOUTH_STOP_NAME = "South (Baker, Hanszen, Lovett, Sid Richardson, Wiess, Will Rice)"
-LIFETOWER_STOP_NAME = "Life tower"
+LIFETOWER_STOP_NAME = "Life Tower"
 
 location_to_address = {
     NORTH_STOP_NAME: "1601 Rice Boulevard, Houston, TX 77005",
@@ -33,7 +33,7 @@ location_to_address = {
 # Plans
 BACK_HOME_PLAN = "Back home 💙"
 LUNCH_PLAN = "Lunch 💛"
-FLEXIBLE_PLAN = "Flexible"
+FLEXIBLE_PLAN = "flexible"
 
 # Car capacity
 PASSENGER_LIMIT = 4
@@ -71,3 +71,22 @@ location_colors = {
 }
 
 CHURCH_LOCATION = (29.892500, -95.525675)
+
+EVENT_TYPES = {
+    "church": {
+        "form_matches": {"sunday service (sunday)", "both!"},
+        "matches": {"1st", "2nd", "9:00", "11:00"},  # used to validate the service time field
+        "location": CHURCH_LOCATION,
+        "label": "Sunday Service"
+    },
+    "hc": {
+        "form_matches": {"summer hc (saturday)", "both!"},
+        "matches": {"summer", "hc", "saturday"},  # might not be needed depending on logic
+        "location": CHURCH_LOCATION,
+        "label": "Summer HC"
+    }
+}
+
+# SUMMER HC FORM QUESTION INCLUSION
+RIDE_TO_COLUMN = "Please select which of the following you will need a ride to!"
+USE_RIDE_SELECTION_FORM_QUESTION = True  # You can toggle this to False later

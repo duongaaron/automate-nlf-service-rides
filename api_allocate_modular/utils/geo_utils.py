@@ -31,6 +31,28 @@ def route_cost(start, waypoints, destination):
     total += dist(curr, destination)
     return total
 
+
+def merge_nearby_coords(address_coords, threshold_meters=100):
+    items = list(address_coords.items())
+    merged = {}
+    used = set()
+
+    for i, (addr1, coord1) in enumerate(items):
+        if addr1 in used:
+            continue
+        group = [addr1]
+        for j in range(i + 1, len(items)):
+            addr2, coord2 = items[j]
+            if addr2 in used:
+                continue
+            if geodesic(coord1, coord2).meters < threshold_meters:
+                group.append(addr2)
+                used.add(addr2)
+        for addr in group:
+            merged[addr] = coord1
+    return merged
+
+
 def geocode_address(address):
     if address in address_coords:
         return address_coords[address]

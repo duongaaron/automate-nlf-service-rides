@@ -5,9 +5,10 @@ import matplotlib.colors as mcolors
 import math
 from folium import PolyLine
 from folium.plugins import PolyLineTextPath
+import os
 
 from utils.constants import (
-    CHURCH_LOCATION
+    CHURCH_LOCATION, EVENT_TYPES
 )
 
 class MapPlotter:
@@ -117,6 +118,30 @@ class MapPlotter:
         m.save(filename)
         print(f"[MapPlotter] Saved map to {filename}")
 
+
     def generate(self, data):
-        self.plot_assignments_map_folium(data["assignments_to"], data["address_coords"], "maps/rides_to/index.html", reverse_arrows=True)
-        self.plot_assignments_map_folium(data["assignments_back"], data["address_coords"], "maps/rides_back/index.html", reverse_arrows=False)
+        for key in EVENT_TYPES:
+            # Define folder paths
+            to_folder = f"maps/rides_to_{key}"
+            back_folder = f"maps/rides_back_{key}"
+            os.makedirs(to_folder, exist_ok=True)
+            os.makedirs(back_folder, exist_ok=True)
+
+            # Define clean index.html filenames inside folders
+            to_html = os.path.join(to_folder, "index.html")
+            back_html = os.path.join(back_folder, "index.html")
+
+            # Plot maps
+            self.plot_assignments_map_folium(
+                data[f"assignments_to_{key}"],
+                data["address_coords"],
+                to_html,
+                reverse_arrows=True
+            )
+
+            self.plot_assignments_map_folium(
+                data[f"assignments_back_{key}"],
+                data["address_coords"],
+                back_html,
+                reverse_arrows=False
+            )

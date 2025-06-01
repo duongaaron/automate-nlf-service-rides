@@ -1,5 +1,6 @@
 import random
 from collections import defaultdict
+import itertools
 from utils.geo_utils import dist, route_cost
 from utils.constants import driver_required_riders_to, driver_required_riders_back, FLEXIBLE_PLAN, BACK_HOME_PLAN, LUNCH_PLAN
 
@@ -93,45 +94,130 @@ def assign_riders_by_furthest_first(drivers, riders, destination, assignments=No
 
     return assignments, unassigned_riders
 
-def assign_from_church(drivers, riders, church_location, assignments=None):
+
+def assign_riders_by_furthest_first(drivers, riders, destination, assignments=None):
     if assignments is None:
         assignments = defaultdict(list)
     for d in drivers:
         assignments.setdefault(d, [])
 
-    sorted_drivers = sorted(drivers, key=lambda d: dist(d.long_lat_pair, church_location), reverse=True)
-    sorted_riders = sorted(riders, key=lambda r: dist(r.long_lat_pair, church_location), reverse=True)
+    all_riders = list(riders)
+    best_cost = [float("inf")]
+    best_assignment = {}
 
-    unassigned_riders = set()
-    whitelist_names = set(d.lower() for d in driver_required_riders_back)
+    driver_state = [{
+        'driver': d,
+        'seats': d.amount_seats,
+        'route': list(assignments[d])
+    } for d in drivers]
 
-    for rider in sorted_riders:
-        best_driver = None
-        best_insert = None
-        best_cost = float('inf')
+    def backtrack(r_idx, current_cost):
+        if current_cost >= best_cost[0]:
+            return
+        if r_idx == len(all_riders):
+            best_cost[0] = current_cost
+            best_assignment.clear()
+            for d in driver_state:
+                best_assignment[d['driver']] = list(d['route'])
+            return
 
-        for driver in sorted_drivers:
-            if driver.amount_seats <= 0 or driver.plans != rider.plans:
+        rider = all_riders[r_idx]
+        assigned = False
+        for d in driver_state:
+            if d['seats'] <= 0 or d['driver'].service_type != rider.service_type:
                 continue
-            route = assignments[driver]
-            insert_positions = range(len(route)+1) if driver.name.lower() in whitelist_names else [len(route)]
-            for pos in insert_positions:
-                new_route = route[:pos] + [rider] + route[pos:]
-                temp = dict(assignments)
-                temp[driver] = new_route
-                cost = sum(route_cost(church_location, temp[d], d.long_lat_pair) for d in sorted_drivers)
-                if cost < best_cost:
-                    best_cost = cost
-                    best_driver = driver
-                    best_insert = pos
 
-        if best_driver:
-            assignments[best_driver].insert(best_insert, rider)
-            best_driver.amount_seats -= 1
-        else:
-            unassigned_riders.add(rider)
+            for pos in range(len(d['route']) + 1):
+                old_cost = route_cost(d['driver'].long_lat_pair, d['route'], destination)
+                new_route = d['route'][:pos] + [rider] + d['route'][pos:]
+                new_cost = route_cost(d['driver'].long_lat_pair, new_route, destination)
+                added_cost = new_cost - old_cost
 
-    return assignments, unassigned_riders
+                d['route'].insert(pos, rider)
+                d['seats'] -= 1
+                backtrack(r_idx + 1, current_cost + added_cost)
+                d['route'].pop(pos)
+                d['seats'] += 1
+                assigned = True
+
+        if not assigned:
+            backtrack(r_idx + 1, current_cost)
+
+    backtrack(0, 0)
+
+    if best_cost[0] == float("inf"):
+        return assignments, set(all_riders)
+
+    final_assignments = defaultdict(list, best_assignment)
+    assigned_riders = {r for route in final_assignments.values() for r in route}
+    unassigned_riders = set(all_riders) - assigned_riders
+
+    return final_assignments, unassigned_riders
+
+def assign_from_church(drivers, riders, church_location, assignments=None, ignore_plans=False):
+    if assignments is None:
+        assignments = defaultdict(list)
+
+    eligible_riders = []
+    for r in riders:
+        if ignore_plans or ("back" in r.plans.lower() or "home" in r.plans.lower()):
+            eligible_riders.append(r)
+
+
+    all_riders = list(riders)
+    best_cost = [float("inf")]
+    best_assignment = {}
+
+    driver_state = [{
+        'driver': d,
+        'seats': d.amount_seats,
+        'route': list(assignments[d])
+    } for d in drivers]
+
+    def backtrack(r_idx, current_cost):
+        if current_cost >= best_cost[0]:
+            return
+        if r_idx == len(all_riders):
+            best_cost[0] = current_cost
+            best_assignment.clear()
+            for d in driver_state:
+                best_assignment[d['driver']] = list(d['route'])
+            return
+
+        rider = all_riders[r_idx]
+        assigned = False
+        for d in driver_state:
+            if d['seats'] <= 0:
+                continue
+            if not ignore_plans and d['driver'].plans != rider.plans:
+                continue
+
+            for pos in range(len(d['route']) + 1):
+                old_cost = route_cost(church_location, d['route'], d['driver'].long_lat_pair)
+                new_route = d['route'][:pos] + [rider] + d['route'][pos:]
+                new_cost = route_cost(church_location, new_route, d['driver'].long_lat_pair)
+                added_cost = new_cost - old_cost
+
+                d['route'].insert(pos, rider)
+                d['seats'] -= 1
+                backtrack(r_idx + 1, current_cost + added_cost)
+                d['route'].pop(pos)
+                d['seats'] += 1
+                assigned = True
+
+        if not assigned:
+            backtrack(r_idx + 1, current_cost)
+
+    backtrack(0, 0)
+
+    if best_cost[0] == float("inf"):
+        return assignments, set(all_riders)
+
+    final_assignments = defaultdict(list, best_assignment)
+    assigned_riders = {r for route in final_assignments.values() for r in route}
+    unassigned_riders = set(all_riders) - assigned_riders
+
+    return final_assignments, unassigned_riders
 
 
 def assign_flexible_plans_first(drivers, riders):
