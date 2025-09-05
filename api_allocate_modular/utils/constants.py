@@ -1,6 +1,6 @@
 # Google Sheets Information
-GOOGLE_SHEETS_LINK = "https://docs.google.com/spreadsheets/d/1HoSoVgSTPdy2VV7zRvZMhtQX77LgRZ13DXvOQSluSNQ/edit?gid=1076432338#gid=1076432338"
-GOOGLE_SHEETS_TAB = "Google Form RESET"
+GOOGLE_SHEETS_LINK = "https://docs.google.com/spreadsheets/d/1HoSoVgSTPdy2VV7zRvZMhtQX77LgRZ13DXvOQSluSNQ/edit?gid=395220366#gid=395220366"
+GOOGLE_SHEETS_TAB = "Form Responses RESET V2"
 
 # Column Titles
 # NAME_COLUMN = "Name (first + last name)"
@@ -13,11 +13,11 @@ GOOGLE_SHEETS_TAB = "Google Form RESET"
 
 NAME_COLUMN = "Name"
 PICKUP_COLUMN = "Where would you like to be picked up?"
-SERVICE_TYPE_COLUMN = "Are you coming to summer house church on Saturday (May 31st)?"
+SERVICE_TYPE_COLUMN = "Which service are you attending?"
 AFTER_SERVICE_PLANS_COLUMN = "Preferred after church plans?"
 IS_DRIVER_COLUMN = "Are you a driver?"
-OC_ADDRESS = "Off Campus address"
-SUMMER_HC_OR_SERVICE = "Please select which of the following you will need a ride to!"
+OC_ADDRESS = "Off Campus Address"
+# SUMMER_HC_OR_SERVICE = "Please select which of the following you will need a ride to!"
 
 # Stop Names
 NORTH_STOP_NAME = "North (Brown, Duncan, Jones, Martel, McMurtry)"

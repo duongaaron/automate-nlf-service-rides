@@ -1,6 +1,7 @@
 from geopy.distance import geodesic
 from geopy.geocoders import GoogleV3
 import os
+from dotenv import load_dotenv
 
 # Caching
 coords_to_dist = dict()
@@ -8,6 +9,8 @@ address_coords = {}
 oc_people_w_invalid_address = set()
 
 # Load API key
+
+load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 geolocator = GoogleV3(api_key=GOOGLE_API_KEY)
 

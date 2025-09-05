@@ -11,7 +11,7 @@ from utils.constants import (
     IS_DRIVER_COLUMN, OC_ADDRESS, location_to_address,
     PASSENGER_LIMIT, rider_groups_to, rider_groups_back,
     driver_required_riders_to, driver_required_riders_back,
-    CHURCH_LOCATION
+    CHURCH_LOCATION, GOOGLE_SHEETS_TAB, GOOGLE_SHEETS_LINK
 )
 from utils.geo_utils import geocode_address, address_coords, oc_people_w_invalid_address
 from utils.assignment_logic import (
@@ -51,8 +51,8 @@ class DataLoader:
     def __init__(self):
         load_dotenv(override=True)
         self.JSON_KEY_PATH = os.getenv("JSON_KEY_PATH")
-        self.link_to_sheet = "https://docs.google.com/spreadsheets/d/1HoSoVgSTPdy2VV7zRvZMhtQX77LgRZ13DXvOQSluSNQ/edit?gid=1076432338#gid=1076432338"
-        self.sheet_name = "Form Responses RESET"
+        self.link_to_sheet = GOOGLE_SHEETS_LINK
+        self.sheet_name = GOOGLE_SHEETS_TAB
 
     def load_data(self):
         creds = ServiceAccountCredentials.from_json_keyfile_name(
