@@ -3,14 +3,6 @@ GOOGLE_SHEETS_LINK = "https://docs.google.com/spreadsheets/d/1HoSoVgSTPdy2VV7zRv
 GOOGLE_SHEETS_TAB = "Form Responses RESET V2"
 
 # Column Titles
-# NAME_COLUMN = "Name (first + last name)"
-# PICKUP_COLUMN = "Where would you like to be picked up? Please include your address (drivers too!)."
-# SERVICE_TYPE_COLUMN = "Which Sunday service are you attending?"
-# AFTER_SERVICE_PLANS_COLUMN = "Preferred After Church Plans?"
-# IS_DRIVER_COLUMN = "Are you a driver?"
-# OC_ADDRESS = PICKUP_COLUMN
-# SUMMER_HC_OR_SERVICE = "Please select which of the following you will need a ride to!"
-
 NAME_COLUMN = "Name"
 PICKUP_COLUMN = "Where would you like to be picked up?"
 SERVICE_TYPE_COLUMN = "Which service are you attending?"
@@ -43,8 +35,7 @@ AMOUNT_SEATS_CHANGE = {
 
 # Whitelisting
 driver_required_riders_to = {
-    "Grace Park": {"Abby Tian", "Kyle Hwang"},
-    # "Jonathan Mak": {"shayla Nguyen", "Pedro Flores-Teran"},
+    # "Grace Park": {"Abby Tian", "Kyle Hwang"},
 }
 rider_groups_to = [
     # {"Khang Le", "seojin Kwon"}
