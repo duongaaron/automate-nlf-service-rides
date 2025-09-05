@@ -130,6 +130,8 @@ class DataLoader:
         assignments_back, remaining_drivers_back, remaining_riders_back = assign_whitelisted_groups(
             drivers_back, riders_back, driver_required_riders_back, rider_groups_back
         )
+        # print("remaining_riders_back", remaining_riders_back)
+  
         assignments_back, unassigned_riders_back = assign_from_church(
             remaining_drivers_back, remaining_riders_back,CHURCH_LOCATION, assignments=assignments_back
         )
