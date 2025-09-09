@@ -8,7 +8,7 @@ PICKUP_COLUMN = "Where would you like to be picked up?"
 SERVICE_TYPE_COLUMN = "Which service are you attending?"
 AFTER_SERVICE_PLANS_COLUMN = "Preferred after church plans?"
 IS_DRIVER_COLUMN = "Are you a driver?"
-OC_ADDRESS = "Off Campus Address"
+OC_ADDRESS = "Off Campus address"
 # SUMMER_HC_OR_SERVICE = "Please select which of the following you will need a ride to!"
 
 # Stop Names
