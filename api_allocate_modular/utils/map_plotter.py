@@ -6,7 +6,7 @@ import math
 from folium import PolyLine
 from folium.plugins import PolyLineTextPath
 from branca.element import Element
-
+import os
 
 from utils.constants import (
     CHURCH_LOCATION
@@ -116,9 +116,12 @@ class MapPlotter:
                 PolyLineTextPath(line, arrow_symbol, repeat=True, repeat_distance='5px', offset=0,
                                  attributes={'fill': color, 'font-weight': 'bold'}).add_to(m)
                 
-        homepage_button = Element("""
+        root_index = os.path.join(os.getcwd(), "index.html")
+        rel_to_root = os.path.relpath(root_index, start=os.path.dirname(os.path.abspath(filename)))
+                
+        homepage_button = Element(f"""
             <div style="position: fixed; top: 10px; right: 10px; z-index: 9999;">
-                <a href="../../index.html">
+                <a href="{rel_to_root}">
                     <button style="
                         padding: 8px 16px;
                         font-size: 14px;
