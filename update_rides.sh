@@ -11,5 +11,3 @@ git commit -m "update for this week's rides"
 
 # Push to remote
 git push
-
-python3 api_allocate_modular/main.py 
