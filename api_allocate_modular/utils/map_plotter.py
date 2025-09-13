@@ -5,6 +5,8 @@ import matplotlib.colors as mcolors
 import math
 from folium import PolyLine
 from folium.plugins import PolyLineTextPath
+from branca.element import Element
+
 
 from utils.constants import (
     CHURCH_LOCATION
@@ -113,6 +115,25 @@ class MapPlotter:
                 line = PolyLine([path_coords[i], path_coords[i + 1]], color=color, weight=3, opacity=0.7).add_to(m)
                 PolyLineTextPath(line, arrow_symbol, repeat=True, repeat_distance='5px', offset=0,
                                  attributes={'fill': color, 'font-weight': 'bold'}).add_to(m)
+                
+        homepage_button = Element("""
+            <div style="position: fixed; top: 10px; right: 10px; z-index: 9999;">
+                <a href="../index.html">
+                    <button style="
+                        padding: 8px 16px;
+                        font-size: 14px;
+                        background-color: #4CAF50;
+                        color: white;
+                        border: none;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        box-shadow: 0 2px 6px rgba(0,0,0,0.3);">
+                        Homepage
+                    </button>
+                </a>
+            </div>
+        """)
+        m.get_root().html.add_child(homepage_button)
 
         m.save(filename)
         print(f"[MapPlotter] Saved map to {filename}")
