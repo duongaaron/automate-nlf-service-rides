@@ -118,7 +118,7 @@ class MapPlotter:
                 
         homepage_button = Element("""
             <div style="position: fixed; top: 10px; right: 10px; z-index: 9999;">
-                <a href="../index.html">
+                <a href="index.html">
                     <button style="
                         padding: 8px 16px;
                         font-size: 14px;
