@@ -1,25 +1,38 @@
+<h1>Click on the links to show the map… Updated 09-13-2025 11-04-14 CST</h1>
 
-    <h1>Click on the links to show the map of partitions for this week's driver/rider assignments. Updated 09-13-2025 11-04-14 CST</h1>
-    <ul>
-    <li><a href="./maps/rides_to/">Rides to map</a></li>
-    <li><a href="./maps/rides_back/">Rides back map</a></li>
-    </ul>
+<ul>
+  <li><a href="./maps/rides_to/">Rides to map</a></li>
+  <li><a href="./maps/rides_back/">Rides back map</a></li>
+</ul>
 
-    <div style="z-index: 9999; display: flex; gap: 10px;">
-        <a href="assignments_09-13-2025 11-04-14.xlsx" download>
-            <button style="margin: 10px; padding: 10px 20px; font-size: 14px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">
-                Download Assignments as Excel
-            </button>
-        </a>
-    </div>
+<div style="z-index:9999; display:flex; gap:10px;">
+  <a href="assignments_09-13-2025_11-04-14.xlsx" download>
+    <button style="margin:10px; padding:10px 20px; font-size:14px; background:#4CAF50; color:#fff; border:none; border-radius:5px;">
+      Download Assignments as Excel
+    </button>
+  </a>
+</div>
 
-    <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; touch-action: pan-x">
-    <iframe
-    src="assignments_table.html"
-    width="100%"
-    height=" 100%"
-    style="min-width: 1000px; border: 1px solid #ccc;"
-    scrolling="yes"
-    ></iframe>
-    </div>
-    
+<div style="overflow-x:auto; -webkit-overflow-scrolling:touch; touch-action:auto;">
+  <iframe id="assignmentsFrame"
+          src="assignments_table.html"
+          width="100%"
+          style="min-width:1000px; border:1px solid #ccc; height:80vh;"  <!-- or omit and use JS below -->
+          loading="lazy"></iframe>
+</div>
+
+<script>
+  // Optional: auto-resize iframe to its content height (same-origin only)
+  const fr = document.getElementById('assignmentsFrame');
+  function resize() {
+    try {
+      const d = fr.contentDocument || fr.contentWindow.document;
+      fr.style.height = Math.max(
+        d.body.scrollHeight, d.documentElement.scrollHeight,
+        d.body.offsetHeight, d.documentElement.offsetHeight
+      ) + 'px';
+    } catch (e) {}
+  }
+  fr.addEventListener('load', resize);
+  window.addEventListener('resize', () => setTimeout(resize, 100));
+</script>
