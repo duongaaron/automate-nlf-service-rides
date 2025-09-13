@@ -36,6 +36,7 @@ AMOUNT_SEATS_CHANGE = {
 # Whitelisting
 driver_required_riders_to = {
     "Camille wong": {"Melody Hong"},
+    "Seojin Kwon": {"Pedro Flores", "Shayla Nguyen"}
 }
 rider_groups_to = [
     # {"Camille wong", "seojin Kwon"}
