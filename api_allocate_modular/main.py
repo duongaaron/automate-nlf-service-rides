@@ -45,20 +45,18 @@ def main():
     </ul>
 
     <div style="z-index: 9999; display: flex; gap: 10px;">
-        <a href="{excel_filename}" download>
-            <button style="margin: 10px; padding: 10px 20px; font-size: 14px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">
-                Download Assignments as Excel
-            </button>
-        </a>
+    <a href="{excel_filename}" download>
+        <button style="margin: 10px; padding: 10px 20px; font-size: 14px; background-color: #4CAF50; color: white; border: none; border-radius: 5px;">
+        Download Assignments as Excel
+        </button>
+    </a>
     </div>
 
-    <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; touch-action: pan-x">
+    <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; touch-action: auto;">
     <iframe
-    src="assignments_table.html"
-    width="100%"
-    height="2000"
-    style="min-width: 1000px; border: 1px solid #ccc;"
-    scrolling="yes"
+        src="assignments_table.html"
+        width="100%"
+        style="min-width: 1000px; height: 80vh; border: 1px solid #ccc;"
     ></iframe>
     </div>
     """
