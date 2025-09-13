@@ -35,14 +35,14 @@ AMOUNT_SEATS_CHANGE = {
 
 # Whitelisting
 driver_required_riders_to = {
-    # "Grace Park": {"Abby Tian", "Kyle Hwang"},
+    "Camille wong": {"Melody Hong"},
 }
 rider_groups_to = [
-    # {"Khang Le", "seojin Kwon"}
+    # {"Camille wong", "seojin Kwon"}
 ]
 
 driver_required_riders_back = {
-    "Grace Park": {"Abby Tian", "Kyle Hwang"},
+    "Seojin Kwon": {"Jane Yoo", "Josh Yang"},
 }
 rider_groups_back = [
     # {"Khang Le", "Aaron duong"}
