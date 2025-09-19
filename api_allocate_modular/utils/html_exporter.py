@@ -72,7 +72,7 @@ class HTMLExporter:
 
         <div style="overflow-x: auto; -webkit-overflow-scrolling: touch; touch-action: auto;">
         <iframe
-            src="assignments_table.html"
+            src="./api_allocate_modular/outputs/html/assignments_table.html"
             width="100%"
             style="min-width: 1000px; height: 80vh; border: 1px solid #ccc;"
         ></iframe>
@@ -80,7 +80,8 @@ class HTMLExporter:
         """
 
         # Load the HTML file
-        with open("./api_allocate_modular/outputs/html/index.html", "w", encoding="utf-8") as f:
+
+        with open("index.html", "w", encoding="utf-8") as f:
             f.write(index_html)
 
         print("[HTMLExporter] HTML table saved to assignments_table.html")
