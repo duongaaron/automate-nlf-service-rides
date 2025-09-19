@@ -52,8 +52,8 @@ class HTMLExporter:
             
         excel_filename = f"assignments_{formatted_time}.xlsx"
 
-        rides_to_html = "../maps/rides_to"
-        rides_back_html = "../maps/rides_back"
+        rides_to_html = "./api_allocate_modular/outputs/maps/rides_to"
+        rides_back_html = "./api_allocate_modular/outputs/maps/rides_back"
 
         index_html = f"""
         <h1>Click on the links to show the map of partitions for this week's driver/rider assignments. Updated {formatted_time} CST</h1>
