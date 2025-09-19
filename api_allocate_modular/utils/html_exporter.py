@@ -52,11 +52,14 @@ class HTMLExporter:
             
         excel_filename = f"assignments_{formatted_time}.xlsx"
 
+        rides_to_html = "../maps/rides_to"
+        rides_back_html = "../maps/rides_back"
+
         index_html = f"""
         <h1>Click on the links to show the map of partitions for this week's driver/rider assignments. Updated {formatted_time} CST</h1>
         <ul>
-        <li><a href="./maps/rides_to/">Rides to map</a></li>
-        <li><a href="./maps/rides_back/">Rides back map</a></li>
+        <li><a href="{rides_to_html}">Rides to map</a></li>
+        <li><a href="{rides_back_html}">Rides back map</a></li>
         </ul>
 
         <div style="z-index: 9999; display: flex; gap: 10px;">

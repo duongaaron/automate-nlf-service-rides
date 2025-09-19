@@ -56,8 +56,6 @@ class ExcelExporter:
         filename = f"assignments_{formatted_time}.xlsx"
         excel_path = "./api_allocate_modular/outputs/excel/"
         full_path = os.path.join(excel_path, filename)
-        print("full path", full_path)
-        print("self.output_dir", self.output_dir)
 
         # Remove all excel files in the repository
         for f in glob.glob(os.path.join(self.output_dir, "**", "assignments*.xlsx"), recursive=True):
@@ -65,8 +63,10 @@ class ExcelExporter:
             except: pass
 
         wb.save(f"./api_allocate_modular/outputs/excel/{filename}")
+
         print(f"[ExcelExporter] Saved to {full_path}")
         data["excel_path"] = full_path
+        
         return full_path
 
     def _place_assignments(
