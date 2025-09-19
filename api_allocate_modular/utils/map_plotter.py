@@ -142,5 +142,5 @@ class MapPlotter:
         print(f"[MapPlotter] Saved map to {filename}")
 
     def generate(self, data):
-        self.plot_assignments_map_folium(data["assignments_to"], data["address_coords"], "maps/rides_to/index.html", reverse_arrows=True)
-        self.plot_assignments_map_folium(data["assignments_back"], data["address_coords"], "maps/rides_back/index.html", reverse_arrows=False)
+        self.plot_assignments_map_folium(data["assignments_to"], data["address_coords"], "./api_allocate_modular/outputs/maps/rides_to/index.html", reverse_arrows=True)
+        self.plot_assignments_map_folium(data["assignments_back"], data["address_coords"], "./api_allocate_modular/outputs/maps/rides_back/index.html", reverse_arrows=False)

@@ -54,19 +54,20 @@ class ExcelExporter:
             ws.column_dimensions[letter].width = max_length + 2
 
         filename = f"assignments_{formatted_time}.xlsx"
-        full_path = os.path.join(self.output_dir, filename)
+        excel_path = "./api_allocate_modular/outputs/excel/"
+        full_path = os.path.join(excel_path, filename)
+        print("full path", full_path)
+        print("self.output_dir", self.output_dir)
 
+        # Remove all excel files in the repository
         for f in glob.glob(os.path.join(self.output_dir, "**", "assignments*.xlsx"), recursive=True):
             try: os.remove(f)
             except: pass
 
-        wb.save(full_path)
-        wb.save(f"./maps/rides_to/{filename}")
-        wb.save(f"./maps/rides_back/{filename}")
+        wb.save(f"./api_allocate_modular/outputs/excel/{filename}")
         print(f"[ExcelExporter] Saved to {full_path}")
         data["excel_path"] = full_path
         return full_path
-    
 
     def _place_assignments(
         self, ws, assignments, unassigned_riders, oc_people_w_invalid_address,

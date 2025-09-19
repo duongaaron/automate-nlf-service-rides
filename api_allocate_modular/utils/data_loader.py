@@ -113,13 +113,10 @@ class DataLoader:
         drivers_back_raw = deepcopy(list(drivers))
         riders_back_raw = deepcopy(list(riders))
 
-        updated_riders, unassigned_flexible_riders, updated_drivers, _ = assign_flexible_plans_first(
+        riders_back, unassigned_flexible_riders, drivers_back, _ = assign_flexible_plans_first(
             drivers_back_raw, riders_back_raw
         )
-
-        drivers_back = updated_drivers
-        riders_back = updated_riders
-
+        
         # TO church
         assignments_to, remaining_drivers_to, remaining_riders_to = assign_whitelisted_groups(
             drivers, riders, driver_required_riders_to, rider_groups_to)
