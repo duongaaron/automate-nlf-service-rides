@@ -1,15 +1,46 @@
 import os
 import glob
 from openpyxl import Workbook
-from openpyxl.styles import PatternFill, Alignment, Font
 from openpyxl.utils import get_column_letter
 from datetime import datetime
+import colorsys
 
 from utils.constants import location_colors
 
 class ExcelExporter:
     def __init__(self, output_dir="."):
         self.output_dir = output_dir
+
+        # copy the known dictionary so we can extend it on the fly
+        self._color_map = dict(location_colors)
+        # track order of first-seen unknowns
+        self._unknown_counter = 0
+        # HSL wheel config (start at red, step by golden angle)
+        self._base_hue = 0.0          # 0.0 == red
+        self._hue_step = 0.381966011  # ~1/phi^2 ≈ golden-angle step for good spacing
+        self._sat = 0.60              # saturation (0..1)
+        self._light = 0.60            # lightness (0..1)
+
+    def _hsl_to_hex(self, h, s, l):
+        # colorsys uses HLS order: (h, l, s)
+        r, g, b = colorsys.hls_to_rgb(h % 1.0, l, s)
+        return f"{int(r*255):02X}{int(g*255):02X}{int(b*255):02X}"  # "RRGGBB"
+
+    def _next_wheel_color(self):
+        # pick hue by stepping around the circle
+        h = (self._base_hue + self._unknown_counter * self._hue_step) % 1.0
+        self._unknown_counter += 1
+        return self._hsl_to_hex(h, self._sat, self._light)
+
+    def _resolve_color(self, key: str):
+        # Normalize key a bit
+        k = (key or "").strip()
+        if not k:
+            k = "UNKNOWN"
+
+        if k not in self._color_map:
+            self._color_map[k] = self._next_wheel_color()
+        return self._color_map[k]
 
     def export(self, data):
         wb = Workbook()
@@ -91,7 +122,8 @@ class ExcelExporter:
             driver_cell = ws.cell(row=row, column=col, value=driver_text)
             driver_key = driver_color_key(driver)
             used_keys.add(driver_key)
-            fill_color = location_colors.get(driver_key, "FFFFFF")
+            # fill_color = location_colors.get(driver_key, "FFFFFF")
+            fill_color = self._resolve_color(driver_key)
             driver_cell.fill = PatternFill(start_color=fill_color, end_color=fill_color, fill_type="solid")
             driver_cell.alignment = Alignment(horizontal="center")
             driver_cell.font = Font(bold=True, underline="single")
@@ -105,7 +137,8 @@ class ExcelExporter:
                 rider_key = rider_color_key(rider)
                 if include_rider_keys_in_legend:
                     used_keys.add(rider_key)
-                fill_color = location_colors.get(rider_key, "FFFFFF")
+                # fill_color = location_colors.get(rider_key, "FFFFFF")
+                fill_color = self._resolve_color(rider_key)
                 rider_cell.fill = PatternFill(start_color=fill_color, end_color=fill_color, fill_type="solid")
                 local_used_cols.add(col)
 
@@ -135,7 +168,8 @@ class ExcelExporter:
                 rider_key = rider_color_key(rider).strip()
                 if include_rider_keys_in_legend:
                     used_keys.add(rider_key)
-                fill_color = location_colors.get(rider_key, "FFFFFF")
+                # fill_color = location_colors.get(rider_key, "FFFFFF")
+                fill_color = self._resolve_color(rider_key)
                 cell.fill = PatternFill(start_color=fill_color, end_color=fill_color, fill_type="solid")
                 local_used_cols.add(col)
 
@@ -143,7 +177,8 @@ class ExcelExporter:
         key_row = 2
         for key in sorted(used_keys):
             key_cell = ws.cell(row=key_row, column=key_col, value=key)
-            fill_color = location_colors.get(key, "FFFFFF")
+            # fill_color = location_colors.get(key, "FFFFFF")
+            fill_color = self._resolve_color(key)
             key_cell.fill = PatternFill(start_color=fill_color, end_color=fill_color, fill_type="solid")
             key_row += 1
 
