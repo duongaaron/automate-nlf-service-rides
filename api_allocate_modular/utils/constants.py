@@ -30,7 +30,7 @@ FLEXIBLE_PLAN = "Flexible"
 # Car capacity
 PASSENGER_LIMIT = 4
 AMOUNT_SEATS_CHANGE = {
-    # "Matthew Ahn": 2,
+    "Kaitlyn Kim": 2,
 }
 
 # Whitelisting

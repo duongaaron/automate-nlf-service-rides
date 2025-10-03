@@ -55,11 +55,13 @@ def assign_riders_by_furthest_first(drivers, riders, destination, assignments=No
         assignments.setdefault(d, [])
 
     shuffled_drivers = list(drivers)
-    random.shuffle(shuffled_drivers)
+    # Random = randomize driver and rider assignments
+    # random.shuffle(shuffled_drivers)
     sorted_drivers = sorted(shuffled_drivers, key=lambda d: dist(d.long_lat_pair, destination), reverse=True)
 
     shuffled_riders = list(riders)
-    random.shuffle(shuffled_riders)
+    # Random = randomize driver and rider assignments
+    # random.shuffle(shuffled_riders)
     sorted_riders = sorted(shuffled_riders, key=lambda r: dist(r.long_lat_pair, destination), reverse=True)
 
     unassigned_riders = set()
