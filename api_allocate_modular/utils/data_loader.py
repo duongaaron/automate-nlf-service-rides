@@ -9,7 +9,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 from utils.constants import (
     NAME_COLUMN, PICKUP_COLUMN, SERVICE_TYPE_COLUMN, AFTER_SERVICE_PLANS_COLUMN,
     IS_DRIVER_COLUMN, OC_ADDRESS, location_to_address,
-    PASSENGER_LIMIT, rider_groups_to, rider_groups_back,
+    PASSENGER_LIMIT, AMOUNT_SEATS_CHANGE, rider_groups_to, rider_groups_back,
     driver_required_riders_to, driver_required_riders_back,
     CHURCH_LOCATION, GOOGLE_SHEETS_TAB, GOOGLE_SHEETS_LINK
 )
@@ -100,6 +100,11 @@ class DataLoader:
             
             if is_driver_val.strip() != "":
                 driver = Driver(name, PASSENGER_LIMIT, pickup_location, service_type, plans, address)
+
+                # Change driver seat amount depending on provided map
+                if driver.name in AMOUNT_SEATS_CHANGE:
+                    driver.amount_seats = AMOUNT_SEATS_CHANGE[driver.name]
+
                 driver.long_lat_pair = coord
                 drivers.add(driver)
             else:
