@@ -1,5 +1,5 @@
 # Google Sheets Information
-GOOGLE_SHEETS_LINK = "https://docs.google.com/spreadsheets/d/1HoSoVgSTPdy2VV7zRvZMhtQX77LgRZ13DXvOQSluSNQ/edit?gid=395220366#gid=395220366"
+GOOGLE_SHEETS_LINK = "https://docs.google.com/spreadsheets/d/1HoSoVgSTPdy2VV7zRvZMhtQX77LgRZ13DXvOQSluSNQ/edit?gid=48029855#gid=48029855"
 GOOGLE_SHEETS_TAB = "aaron copy"
 
 # Column Titles
