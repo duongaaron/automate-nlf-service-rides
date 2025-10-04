@@ -1,6 +1,6 @@
 # Google Sheets Information
 GOOGLE_SHEETS_LINK = "https://docs.google.com/spreadsheets/d/1HoSoVgSTPdy2VV7zRvZMhtQX77LgRZ13DXvOQSluSNQ/edit?gid=395220366#gid=395220366"
-GOOGLE_SHEETS_TAB = "Form Responses RESET V2"
+GOOGLE_SHEETS_TAB = "aaron copy"
 
 # Column Titles
 NAME_COLUMN = "Name"
