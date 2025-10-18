@@ -198,18 +198,16 @@ def assign_from_church(drivers, riders, church_location, assignments=None):
 #     return all_unassigned_riders, unassigned_flexible_riders, drivers, riders
 
 from collections import defaultdict
+from collections import defaultdict
 
 def assign_flexible_plans_first(drivers, riders):
-    # Assume .plans is one of {BACK_HOME_PLAN, LUNCH_PLAN, FLEXIBLE_PLAN}
-    # and drivers have .amount_seats
-
-    # Split by flexibility (exact match)
+    # Split by flexibility
     flexible_drivers = [d for d in drivers if FLEXIBLE_PLAN in d.plans]
     nonflex_drivers   = [d for d in drivers if FLEXIBLE_PLAN not in d.plans]
     flexible_riders   = [r for r in riders  if FLEXIBLE_PLAN in r.plans]
     nonflex_riders    = [r for r in riders  if FLEXIBLE_PLAN not in r.plans]
 
-    # Buckets for non-flex commitments only
+    # Group non-flex drivers and riders by their current plans
     drivers_by_plan = defaultdict(list)
     for d in nonflex_drivers:
         drivers_by_plan[d.plans].append(d)
@@ -219,20 +217,22 @@ def assign_flexible_plans_first(drivers, riders):
         riders_by_plan[r.plans].append(r)
 
     # ---------------- DRIVERS ----------------
-    # Cover shortfalls with flexible drivers, BACK_HOME then LUNCH
+    # Assign flexible drivers to cover shortfalls (BACK_HOME first, then LUNCH)
     assigned_flex_drivers = set()
+
+    def seats_for(plan):
+        return sum(d.amount_seats for d in drivers if plan in d.plans)
+
     for plan in (BACK_HOME_PLAN, LUNCH_PLAN):
-        rider_need = len(riders_by_plan[plan])
-        seat_have  = sum(d.amount_seats for d in drivers_by_plan[plan])
-        shortfall  = rider_need - seat_have
+        shortfall = len(riders_by_plan[plan]) - seats_for(plan)
         if shortfall <= 0:
             continue
         for d in flexible_drivers:
             if d in assigned_flex_drivers:
                 continue
-            d.plans = plan
+            # assign plan to flexible driver
+            d.plans = [plan] if isinstance(d.plans, (list, set)) else plan
             assigned_flex_drivers.add(d)
-            drivers_by_plan[plan].append(d)
             shortfall -= d.amount_seats
             if shortfall <= 0:
                 break
@@ -240,35 +240,34 @@ def assign_flexible_plans_first(drivers, riders):
     # Any remaining flexible drivers default to BACK_HOME
     for d in flexible_drivers:
         if d not in assigned_flex_drivers:
-            d.plans = BACK_HOME_PLAN
-            drivers_by_plan[BACK_HOME_PLAN].append(d)
+            d.plans = [BACK_HOME_PLAN] if isinstance(d.plans, (list, set)) else BACK_HOME_PLAN
 
     # ---------------- RIDERS ----------------
-    # Compute spare capacity AFTER seating non-flex riders only
-    bh_spare = max(0, sum(d.amount_seats for d in drivers_by_plan[BACK_HOME_PLAN]) - len(riders_by_plan[BACK_HOME_PLAN]))
-    ln_spare = max(0, sum(d.amount_seats for d in drivers_by_plan[LUNCH_PLAN])     - len(riders_by_plan[LUNCH_PLAN]))
+    # Compute spare seats (without mutating driver capacity)
+    bh_capacity = max(0, seats_for(BACK_HOME_PLAN) - len(riders_by_plan[BACK_HOME_PLAN]))
+    ln_capacity = max(0, seats_for(LUNCH_PLAN) - len(riders_by_plan[LUNCH_PLAN]))
 
     remaining = list(flexible_riders)
 
     # Fill BACK_HOME spare first
-    take = min(bh_spare, len(remaining))
+    take = min(bh_capacity, len(remaining))
     for r in remaining[:take]:
-        r.plans = BACK_HOME_PLAN
+        r.plans = [BACK_HOME_PLAN] if isinstance(r.plans, (list, set)) else BACK_HOME_PLAN
     remaining = remaining[take:]
 
-    # Then LUNCH spare
-    take = min(ln_spare, len(remaining))
+    # Then fill LUNCH spare
+    take = min(ln_capacity, len(remaining))
     for r in remaining[:take]:
-        r.plans = LUNCH_PLAN
+        r.plans = [LUNCH_PLAN] if isinstance(r.plans, (list, set)) else LUNCH_PLAN
     remaining = remaining[take:]
 
-    # Leftovers default to BACK_HOME regardless of spare
+    # Leftovers default to BACK_HOME
     for r in remaining:
-        r.plans = BACK_HOME_PLAN
+        r.plans = [BACK_HOME_PLAN] if isinstance(r.plans, (list, set)) else BACK_HOME_PLAN
 
-    # Return shape preserved; all flex riders now have concrete plans
-    assigned_flexible_riders = [r for r in flexible_riders]  # all assigned
-    unassigned_flexible_riders = set()                       # none by design
+    # Return shape preserved
+    assigned_flexible_riders = [r for r in flexible_riders]
+    unassigned_flexible_riders = set()
     all_unassigned_riders = nonflex_riders + assigned_flexible_riders
 
     return all_unassigned_riders, unassigned_flexible_riders, drivers, riders
