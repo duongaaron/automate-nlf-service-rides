@@ -204,10 +204,10 @@ def assign_flexible_plans_first(drivers, riders):
     # and drivers have .amount_seats
 
     # Split by flexibility (exact match)
-    flexible_drivers = [d for d in drivers if d.plans == FLEXIBLE_PLAN]
-    nonflex_drivers   = [d for d in drivers if d.plans != FLEXIBLE_PLAN]
-    flexible_riders   = [r for r in riders  if r.plans == FLEXIBLE_PLAN]
-    nonflex_riders    = [r for r in riders  if r.plans != FLEXIBLE_PLAN]
+    flexible_drivers = [d for d in drivers if FLEXIBLE_PLAN in d.plans]
+    nonflex_drivers   = [d for d in drivers if FLEXIBLE_PLAN not in d.plans]
+    flexible_riders   = [r for r in riders  if FLEXIBLE_PLAN in r.plans]
+    nonflex_riders    = [r for r in riders  if FLEXIBLE_PLAN not in r.plans]
 
     # Buckets for non-flex commitments only
     drivers_by_plan = defaultdict(list)
