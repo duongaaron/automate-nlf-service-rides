@@ -121,15 +121,6 @@ class DataLoader:
         riders_back, unassigned_flexible_riders, drivers_back, _ = assign_flexible_plans_first(
             drivers_back_raw, riders_back_raw
         )
-
-        for r in riders_back:
-            print("riders back", r.name, r.plans)
-
-        for r in unassigned_flexible_riders:
-            print("unassigned_flexible_riders", r.name, r.plans)
-    
-        for r in drivers_back:
-            print("drivers_back", r.name, r.plans, r.amount_seats)
         
         # TO church
         assignments_to, remaining_drivers_to, remaining_riders_to = assign_whitelisted_groups(
