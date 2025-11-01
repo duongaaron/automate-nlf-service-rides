@@ -30,12 +30,12 @@ FLEXIBLE_PLAN = "Flexible"
 # Car capacity
 PASSENGER_LIMIT = 4
 AMOUNT_SEATS_CHANGE = {
-    "Ellie Jung": 6,
+    "Ellie Jung": 5,
 }
 
 # Whitelisting
 driver_required_riders_to = {
-    # "Camille": {"Claire Doh"},
+    "Ethan Yu": {"Benjamin Kim"},
 }
 rider_groups_to = [
     # {"Camille wong", "seojin Kwon"}
