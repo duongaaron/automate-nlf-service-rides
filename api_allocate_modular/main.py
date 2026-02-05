@@ -6,6 +6,7 @@ from utils.map_plotter import MapPlotter
 def main():
     print("Loading data...")
     data = DataLoader().load_data()
+    print(data)
 
     print("Exporting to Excel...")
     ExcelExporter().export(data)

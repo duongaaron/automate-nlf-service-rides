@@ -1,6 +1,8 @@
 # Google Sheets Information
-GOOGLE_SHEETS_LINK = "https://docs.google.com/spreadsheets/d/1HoSoVgSTPdy2VV7zRvZMhtQX77LgRZ13DXvOQSluSNQ/edit?gid=48029855#gid=48029855"
+GOOGLE_SHEETS_LINK = "https://docs.google.com/spreadsheets/d/1HoSoVgSTPdy2VV7zRvZMhtQX77LgRZ13DXvOQSluSNQ/edit?gid=395220366#gid=395220366"
+# GOOGLE_SHEETS_TAB = "Form Responses RESET V2"
 GOOGLE_SHEETS_TAB = "aaron copy"
+
 
 # Column Titles
 NAME_COLUMN = "Name"
@@ -35,7 +37,7 @@ AMOUNT_SEATS_CHANGE = {
 
 # Whitelisting
 driver_required_riders_to = {
-    "Ethan Yu": {"Benjamin Kim"},
+    # "Bailey Peek": {"Amy Son"},
 }
 rider_groups_to = [
     # {"Camille wong", "seojin Kwon"}
